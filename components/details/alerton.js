@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { isOpeningAll } from "../atoms/atoms";
 
 export default function AlertViewer() {
   const [openingall, setOpeningAll] = useAtom(isOpeningAll);
 
+  const state = openingall || { opening: false, severity: "success", alerttext: "" };
+
   useEffect(() => {
-    if (openingall.opening) {
+    if (state.opening) {
       const timer = setTimeout(() => {
         setOpeningAll({ opening: false, severity: "success", alerttext: "" });
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [openingall.opening, setOpeningAll]);
+  }, [state.opening, setOpeningAll]);
 
-  if (!openingall.opening) return null;
+  if (!state.opening) return null;
 
   const colors = {
     success: "bg-success",
@@ -26,9 +28,9 @@ export default function AlertViewer() {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9998]">
       <div
-        className={`${colors[openingall.severity] || colors.success} text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center gap-3`}
+        className={`${colors[state.severity] || colors.success} text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center gap-3`}
       >
-        <span>{openingall.alerttext}</span>
+        <span>{state.alerttext}</span>
         <button
           onClick={() => setOpeningAll({ opening: false, severity: "success", alerttext: "" })}
           className="text-white/70 hover:text-white"

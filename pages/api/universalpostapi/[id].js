@@ -398,9 +398,6 @@ export default async (req, res) => {
       }
     }
   } else {
-    console.log("No Session");
-    res.status(401);
+    return res.status(401).json({ stat: "unauthorized" });
   }
-
-  res.end();
 };
