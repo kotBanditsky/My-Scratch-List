@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { ru } from "../../components/messages/ru";
 import { en } from "../../components/messages/en";
 import { useGetMongo, universalPost } from "../../components/api";
-import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import {
   PencilIcon,
@@ -52,7 +51,7 @@ export default function AdminPanel() {
     return (
       <Layout>
         <div className="w-full h-screen flex justify-center pt-20">
-          <CircularProgress sx={{ color: "#D4AF37" }} />
+          <div className="spinner" />
         </div>
       </Layout>
     );

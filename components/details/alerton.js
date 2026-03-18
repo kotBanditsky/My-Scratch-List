@@ -1,69 +1,43 @@
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import React from "react";
-import IconButton from "@mui/material/IconButton";
+import React, { useEffect } from "react";
 import { useAtom } from "jotai";
 import { isOpeningAll } from "../atoms/atoms";
 
 export default function AlertViewer() {
   const [openingall, setOpeningAll] = useAtom(isOpeningAll);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+  useEffect(() => {
+    if (openingall.opening) {
+      const timer = setTimeout(() => {
+        setOpeningAll({ opening: false, severity: "success", alerttext: "" });
+      }, 3000);
+      return () => clearTimeout(timer);
     }
+  }, [openingall.opening, setOpeningAll]);
 
-    setOpeningAll({
-      opening: false,
-      severity: "success",
-      alerttext: "",
-    });
+  if (!openingall.opening) return null;
+
+  const colors = {
+    success: "bg-success",
+    error: "bg-danger",
+    info: "bg-accent",
+    warning: "bg-yellow-500",
   };
 
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <svg
-          classN="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
-        </svg>
-      </IconButton>
-    </React.Fragment>
-  );
-
   return (
-    <Snackbar
-      open={openingall.opening}
-      autoHideDuration={3000}
-      onClose={handleClose}
-      action={action}
-    >
-      <Alert
-        onClose={handleClose}
-        severity={openingall.severity}
-        sx={{ width: "100%" }}
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9998]">
+      <div
+        className={`${colors[openingall.severity] || colors.success} text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center gap-3`}
       >
-        {openingall.alerttext}
-      </Alert>
-    </Snackbar>
+        <span>{openingall.alerttext}</span>
+        <button
+          onClick={() => setOpeningAll({ opening: false, severity: "success", alerttext: "" })}
+          className="text-white/70 hover:text-white"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }

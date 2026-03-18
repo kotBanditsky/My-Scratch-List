@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Layout from "../../components/Layout";
 import { getSession, useSession } from "next-auth/react";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useAtom } from "jotai";
 import { isOpeningAll } from "../../components/atoms/atoms";
 import copy from "copy-to-clipboard";
@@ -35,7 +34,7 @@ export default function Account() {
     if (isLoading) {
       return (
         <div className="flex justify-center items-center h-64">
-          <CircularProgress sx={{ color: "#8B5CF6" }} size={32} />
+          <div className="spinner" />
         </div>
       );
     }

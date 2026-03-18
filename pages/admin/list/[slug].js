@@ -8,7 +8,6 @@ import { en } from "../../../components/messages/en";
 import { useGetMongo, universalPost } from "../../../components/api";
 import { useAtom } from "jotai";
 import { isOpeningAll } from "../../../components/atoms/atoms";
-import CircularProgress from "@mui/material/CircularProgress";
 import {
   TrashIcon,
   PencilIcon,
@@ -69,7 +68,7 @@ export default function AdminListEditor() {
     return (
       <Layout>
         <div className="w-full h-screen flex justify-center pt-20">
-          <CircularProgress />
+          <div className="spinner" />
         </div>
       </Layout>
     );
@@ -542,7 +541,7 @@ export default function AdminListEditor() {
                           title={t.admin_generate}
                         >
                           {generatingItemSlug === game.slug ? (
-                            <CircularProgress size={16} color="inherit" />
+                            <div className="spinner" />
                           ) : (
                             <SparklesIcon className="h-4 w-4" />
                           )}

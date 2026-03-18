@@ -6,7 +6,6 @@ import { en } from "./messages/en";
 import { useRouter } from "next/router";
 import Achievments from "./details/achievments";
 import { useGetMongo } from "./api";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const Loader = () => {
   const { data: session } = useSession();
@@ -19,7 +18,7 @@ const Loader = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <CircularProgress sx={{ color: "#8B5CF6" }} size={32} />
+        <div className="spinner" />
       </div>
     );
   }

@@ -4,7 +4,6 @@ import { en } from "./messages/en";
 import { useRouter } from "next/router";
 import TopGrid from "./grid/TopGrid";
 import { useGetMongo } from "./api";
-import CircularProgress from "@mui/material/CircularProgress";
 import Achievments from "./details/achievments";
 
 const OffLoader = () => {
@@ -23,7 +22,7 @@ const OffLoader = () => {
   if (isLoading || !lists) {
     return (
       <div className="flex justify-center items-center h-64">
-        <CircularProgress sx={{ color: "#8B5CF6" }} size={32} />
+        <div className="spinner" />
       </div>
     );
   }

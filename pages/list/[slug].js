@@ -8,7 +8,6 @@ import { en } from "../../components/messages/en";
 import { useGetMongo } from "../../components/api";
 import TopGrid from "../../components/grid/TopGrid";
 import Achievments from "../../components/details/achievments";
-import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ListPage() {
   const router = useRouter();
@@ -20,7 +19,7 @@ export default function ListPage() {
     return (
       <Layout>
         <div className="flex justify-center items-center h-64">
-          <CircularProgress sx={{ color: "#8B5CF6" }} size={32} />
+          <div className="spinner" />
         </div>
       </Layout>
     );
